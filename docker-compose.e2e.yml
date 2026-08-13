@@ -1,0 +1,12 @@
+# Sobe o navegador que os testes Selenium controlam:
+#   docker compose -f docker-compose.yml -f docker-compose.e2e.yml up -d
+name: advicetodo
+
+services:
+  selenium:
+    image: selenium/standalone-chromium:latest
+    shm_size: 2gb
+    ports:
+      - "4444:4444"
+    depends_on:
+      - web

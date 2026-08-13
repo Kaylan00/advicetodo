@@ -14,7 +14,8 @@ def test_visitante_e_mandado_para_o_login(browser, wait, base_url):
 def test_cadastro_leva_direto_para_a_lista_vazia(browser, wait, base_url, usuario):
     criar_conta(browser, wait, base_url, usuario)
 
-    assert browser.find_element(*seletor("lista-vazia")).is_displayed()
+    # A lista comeca em "Carregando", entao o estado vazio precisa ser esperado, nao buscado.
+    wait.until(EC.visibility_of_element_located(seletor("lista-vazia")))
     assert usuario["nome"] in browser.find_element(*seletor("usuario-logado")).text
 
 

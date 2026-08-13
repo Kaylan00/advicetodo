@@ -16,8 +16,8 @@ class User(AbstractUser):
     objects = UserManager()
 
     class Meta:
-        verbose_name = "usuario"
-        verbose_name_plural = "usuarios"
+        verbose_name = "usuário"
+        verbose_name_plural = "usuários"
         ordering = ("email",)
 
     def __str__(self):

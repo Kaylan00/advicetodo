@@ -20,7 +20,7 @@ class CategorySerializer(serializers.ModelSerializer):
         if self.instance:
             duplicates = duplicates.exclude(pk=self.instance.pk)
         if duplicates.exists():
-            raise serializers.ValidationError("Voce ja tem uma categoria com esse nome.")
+            raise serializers.ValidationError("Você já tem uma categoria com esse nome.")
         return name
 
 

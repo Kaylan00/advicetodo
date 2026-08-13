@@ -18,7 +18,7 @@ export default function CategoryPanel({ categorias, onMudou, onFiltrar, categori
       setErro(null);
       onMudou();
     } catch (problema) {
-      setErro(problema.firstMessage ?? "Nao foi possivel criar a categoria.");
+      setErro(problema.firstMessage ?? "Não foi possível criar a categoria.");
     }
   }
 

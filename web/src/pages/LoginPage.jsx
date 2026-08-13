@@ -22,8 +22,8 @@ export default function LoginPage() {
     } catch (problema) {
       setErro(
         problema.status === 401
-          ? "E-mail ou senha invalidos."
-          : (problema.firstMessage ?? "Nao foi possivel entrar."),
+          ? "E-mail ou senha inválidos."
+          : (problema.firstMessage ?? "Não foi possível entrar."),
       );
     } finally {
       setEnviando(false);
@@ -34,7 +34,7 @@ export default function LoginPage() {
     <AuthLayout
       title="Entrar"
       subtitle="Organize suas tarefas e divida o que for de time."
-      footer={<>Ainda nao tem conta? <Link to="/criar-conta">Criar conta</Link></>}
+      footer={<>Ainda não tem conta? <Link to="/criar-conta">Criar conta</Link></>}
     >
       <form className="form" onSubmit={entrar} data-testid="form-login">
         <label className="field">

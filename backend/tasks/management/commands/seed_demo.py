@@ -13,20 +13,20 @@ SENHA = "advice2026"
 
 CATEGORIAS = [
     ("Auditoria", "#0F766E"),
-    ("Operacao", "#2563EB"),
+    ("Operação", "#2563EB"),
     ("Pessoal", "#B45309"),
 ]
 
 TAREFAS = [
     ("Revisar guias de OPME da semana", "Auditoria", Priority.HIGH, -2),
-    ("Fechar relatorio de glosas", "Auditoria", Priority.HIGH, 1),
+    ("Fechar relatório de glosas", "Auditoria", Priority.HIGH, 1),
     ("Atualizar tabela de procedimentos", "Auditoria", Priority.MEDIUM, 5),
-    ("Conferir integracao com a operadora", "Operacao", Priority.HIGH, 0),
-    ("Preparar rotina de importacao", "Operacao", Priority.MEDIUM, 3),
-    ("Revisar alertas de monitoramento", "Operacao", Priority.LOW, 8),
-    ("Documentar fluxo de autorizacao", "Operacao", Priority.MEDIUM, 12),
+    ("Conferir integração com a operadora", "Operação", Priority.HIGH, 0),
+    ("Preparar rotina de importação", "Operação", Priority.MEDIUM, 3),
+    ("Revisar alertas de monitoramento", "Operação", Priority.LOW, 8),
+    ("Documentar fluxo de autorização", "Operação", Priority.MEDIUM, 12),
     ("Agendar consulta", "Pessoal", Priority.LOW, 20),
-    ("Renovar plano odontologico", "Pessoal", Priority.LOW, None),
+    ("Renovar plano odontológico", "Pessoal", Priority.LOW, None),
     ("Estudar Django REST Framework", "Pessoal", Priority.MEDIUM, None),
     ("Organizar backlog do time", None, Priority.MEDIUM, 2),
     ("Responder e-mails pendentes", None, Priority.LOW, None),
@@ -34,7 +34,7 @@ TAREFAS = [
 
 
 class Command(BaseCommand):
-    help = "Cria dois usuarios com tarefas, categorias e um compartilhamento para explorar a API."
+    help = "Cria dois usuários com tarefas, categorias e um compartilhamento para explorar a API."
 
     def handle(self, *args, **options):
         ana = self._usuario("ana@advice.dev", "Ana")

@@ -9,7 +9,7 @@ OWNER_ONLY_ACTIONS = {"destroy", "list_shares", "create_share", "revoke_share"}
 class TaskAccessPermission(BasePermission):
     """Dono pode tudo; convidado le sempre e escreve so com permissao de edicao."""
 
-    message = "Voce nao tem permissao para alterar esta tarefa."
+    message = "Você não tem permissão para alterar esta tarefa."
 
     def has_object_permission(self, request, view, obj):
         if obj.owner_id == request.user.id:

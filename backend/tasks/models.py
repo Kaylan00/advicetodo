@@ -38,8 +38,8 @@ class Task(TimeStampedModel):
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name="tasks", on_delete=models.CASCADE
     )
-    title = models.CharField("titulo", max_length=120)
-    description = models.TextField("descricao", blank=True)
+    title = models.CharField("título", max_length=120)
+    description = models.TextField("descrição", blank=True)
     category = models.ForeignKey(
         Category, related_name="tasks", on_delete=models.SET_NULL, null=True, blank=True
     )
@@ -47,8 +47,8 @@ class Task(TimeStampedModel):
         "prioridade", max_length=6, choices=Priority.choices, default=Priority.MEDIUM
     )
     due_date = models.DateField("prazo", null=True, blank=True)
-    is_completed = models.BooleanField("concluida", default=False)
-    completed_at = models.DateTimeField("concluida em", null=True, blank=True)
+    is_completed = models.BooleanField("concluída", default=False)
+    completed_at = models.DateTimeField("concluída em", null=True, blank=True)
 
     objects = TaskQuerySet.as_manager()
 
@@ -101,7 +101,7 @@ class TaskShare(models.Model):
         settings.AUTH_USER_MODEL, related_name="shared_tasks", on_delete=models.CASCADE
     )
     permission = models.CharField(
-        "permissao", max_length=4, choices=SharePermission.choices, default=SharePermission.VIEW
+        "permissão", max_length=4, choices=SharePermission.choices, default=SharePermission.VIEW
     )
     created_at = models.DateTimeField(auto_now_add=True)
 

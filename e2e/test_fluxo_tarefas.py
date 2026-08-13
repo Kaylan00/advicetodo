@@ -25,7 +25,7 @@ def test_login_com_senha_errada_mostra_erro(browser, wait, base_url, usuario):
     entrar(browser, wait, base_url, {**usuario, "senha": "senha-que-nao-e-essa"})
 
     erro = wait.until(EC.visibility_of_element_located(seletor("erro-login")))
-    assert "invalidos" in erro.text
+    assert "inválidos" in erro.text
 
 
 def test_criar_e_concluir_tarefa(browser, wait, base_url, usuario):
@@ -67,7 +67,7 @@ def test_compartilhar_tarefa_com_quem_nao_existe_avisa(browser, wait, base_url, 
     browser.find_element(*seletor("confirmar-compartilhar")).click()
 
     erro = wait.until(EC.visibility_of_element_located(seletor("erro-compartilhar")))
-    assert "Nenhum usuario" in erro.text
+    assert "Nenhum usuário" in erro.text
 
 
 def test_paginacao_aparece_quando_passa_de_dez_tarefas(browser, wait, base_url, usuario):
@@ -76,9 +76,9 @@ def test_paginacao_aparece_quando_passa_de_dez_tarefas(browser, wait, base_url, 
         criar_tarefa(browser, wait, f"Tarefa numerada {numero:02d}")
 
     resumo = wait.until(EC.visibility_of_element_located(seletor("pagina-atual")))
-    assert "Pagina 1 de 2" in resumo.text
+    assert "Página 1 de 2" in resumo.text
     assert len(browser.find_elements(By.CSS_SELECTOR, '[data-testid="tarefa"]')) == 10
 
     browser.find_element(*seletor("proxima-pagina")).click()
-    wait.until(lambda driver: "Pagina 2 de 2" in driver.find_element(*seletor("pagina-atual")).text)
+    wait.until(lambda driver: "Página 2 de 2" in driver.find_element(*seletor("pagina-atual")).text)
     assert len(browser.find_elements(By.CSS_SELECTOR, '[data-testid="tarefa"]')) == 1

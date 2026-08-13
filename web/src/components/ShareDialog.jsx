@@ -22,7 +22,7 @@ export default function ShareDialog({ tarefa, onClose, onMudou }) {
       setErro(null);
       onMudou();
     } catch (problema) {
-      setErro(problema.firstMessage ?? "Nao foi possivel compartilhar.");
+      setErro(problema.firstMessage ?? "Não foi possível compartilhar.");
     }
   }
 
@@ -50,7 +50,7 @@ export default function ShareDialog({ tarefa, onClose, onMudou }) {
             />
           </label>
           <label className="field">
-            <span>Permissao</span>
+            <span>Permissão</span>
             <select value={permissao} onChange={(event) => setPermissao(event.target.value)}>
               <option value="view">Somente leitura</option>
               <option value="edit">Pode editar</option>
@@ -84,7 +84,7 @@ export default function ShareDialog({ tarefa, onClose, onMudou }) {
             </button>
           </li>
         ))}
-        {compartilhamentos.length === 0 && <li className="painel__vazio">Ainda so voce.</li>}
+        {compartilhamentos.length === 0 && <li className="painel__vazio">Ainda só você.</li>}
       </ul>
     </Dialog>
   );

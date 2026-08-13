@@ -37,7 +37,7 @@ export default function TaskForm({ tarefa, categorias, onClose, onSubmit }) {
       });
       onClose();
     } catch (problema) {
-      setErro(problema.firstMessage ?? "Nao foi possivel salvar a tarefa.");
+      setErro(problema.firstMessage ?? "Não foi possível salvar a tarefa.");
       setEnviando(false);
     }
   }
@@ -50,7 +50,7 @@ export default function TaskForm({ tarefa, categorias, onClose, onSubmit }) {
     >
       <form className="form" onSubmit={salvar}>
         <label className="field">
-          <span>Titulo</span>
+          <span>Título</span>
           <input
             type="text"
             value={form.title}
@@ -62,7 +62,7 @@ export default function TaskForm({ tarefa, categorias, onClose, onSubmit }) {
           />
         </label>
         <label className="field">
-          <span>Descricao</span>
+          <span>Descrição</span>
           <textarea rows={3} value={form.description} onChange={atualizar("description")} />
         </label>
         <div className="form__row">
@@ -81,7 +81,7 @@ export default function TaskForm({ tarefa, categorias, onClose, onSubmit }) {
             <span>Prioridade</span>
             <select value={form.priority} onChange={atualizar("priority")}>
               <option value="low">Baixa</option>
-              <option value="medium">Media</option>
+              <option value="medium">Média</option>
               <option value="high">Alta</option>
             </select>
           </label>

@@ -20,7 +20,7 @@ export default function RegisterPage() {
       await register(form);
       navigate("/tarefas", { replace: true });
     } catch (problema) {
-      setErro(problema.firstMessage ?? "Nao foi possivel criar a conta.");
+      setErro(problema.firstMessage ?? "Não foi possível criar a conta.");
     } finally {
       setEnviando(false);
     }
@@ -32,7 +32,7 @@ export default function RegisterPage() {
     <AuthLayout
       title="Criar conta"
       subtitle="Leva menos de um minuto."
-      footer={<>Ja tem conta? <Link to="/entrar">Entrar</Link></>}
+      footer={<>Já tem conta? <Link to="/entrar">Entrar</Link></>}
     >
       <form className="form" onSubmit={criarConta} data-testid="form-cadastro">
         <label className="field">
@@ -60,7 +60,7 @@ export default function RegisterPage() {
             required
             autoComplete="new-password"
           />
-          <small>Use pelo menos 8 caracteres, sem sequencias obvias.</small>
+          <small>Use pelo menos 8 caracteres, sem sequências óbvias.</small>
         </label>
         {erro && (
           <p className="alert" role="alert" data-testid="erro-cadastro">

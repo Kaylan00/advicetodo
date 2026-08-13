@@ -14,7 +14,7 @@ class DomainError(Exception):
 
 class UpstreamUnavailable(APIException):
     status_code = status.HTTP_503_SERVICE_UNAVAILABLE
-    default_detail = "Servico externo indisponivel no momento."
+    default_detail = "Serviço externo indisponível no momento."
     default_code = "upstream_unavailable"
 
 

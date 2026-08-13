@@ -125,7 +125,7 @@ SIMPLE_JWT = {
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "AdviceTodo API",
-    "DESCRIPTION": "Gerenciamento de tarefas com categorias e compartilhamento entre usuarios.",
+    "DESCRIPTION": "Gerenciamento de tarefas com categorias e compartilhamento entre usuários.",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "COMPONENT_SPLIT_REQUEST": True,

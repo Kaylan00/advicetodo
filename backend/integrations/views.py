@@ -35,7 +35,7 @@ class HolidayListView(APIView):
         try:
             year = int(raw)
         except (TypeError, ValueError):
-            raise ValidationError({"year": ["Informe um ano valido."]}) from None
+            raise ValidationError({"year": ["Informe um ano válido."]}) from None
         if not ANO_MINIMO <= year <= ANO_MAXIMO:
             raise ValidationError({"year": [f"Use um ano entre {ANO_MINIMO} e {ANO_MAXIMO}."]})
         return year

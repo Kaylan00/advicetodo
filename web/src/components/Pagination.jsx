@@ -2,7 +2,7 @@ export default function Pagination({ page, pages, count, onChange }) {
   if (count === 0) return null;
 
   return (
-    <nav className="pagination" aria-label="Paginacao">
+    <nav className="pagination" aria-label="Paginação">
       <button
         type="button"
         className="button button--ghost"
@@ -13,7 +13,7 @@ export default function Pagination({ page, pages, count, onChange }) {
         Anterior
       </button>
       <span data-testid="pagina-atual">
-        Pagina {page} de {pages} ({count} tarefas)
+        Página {page} de {pages} ({count} tarefas)
       </span>
       <button
         type="button"
@@ -22,7 +22,7 @@ export default function Pagination({ page, pages, count, onChange }) {
         onClick={() => onChange(page + 1)}
         data-testid="proxima-pagina"
       >
-        Proxima
+        Próxima
       </button>
     </nav>
   );

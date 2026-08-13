@@ -6,10 +6,10 @@ from django.db import models
 
 class Priority(models.TextChoices):
     LOW = "low", "Baixa"
-    MEDIUM = "medium", "Media"
+    MEDIUM = "medium", "Média"
     HIGH = "high", "Alta"
 
 
 class SharePermission(models.TextChoices):
     VIEW = "view", "Somente leitura"
-    EDIT = "edit", "Edicao"
+    EDIT = "edit", "Edição"

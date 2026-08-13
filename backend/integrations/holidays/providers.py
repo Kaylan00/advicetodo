@@ -31,7 +31,7 @@ class BrasilAPIProvider:
         except requests.RequestException as exc:
             raise HolidayProviderError(f"Falha ao consultar os feriados de {year}.") from exc
         except ValueError as exc:
-            raise HolidayProviderError("O provedor de feriados devolveu um JSON invalido.") from exc
+            raise HolidayProviderError("O provedor de feriados devolveu um JSON inválido.") from exc
 
         try:
             return [
@@ -46,9 +46,9 @@ class StaticHolidayProvider:
     """Usado nos testes e como plano B quando nao se quer depender da rede."""
 
     FIXED = {
-        1: (1, "Confraternizacao mundial"),
+        1: (1, "Confraternização mundial"),
         4: (21, "Tiradentes"),
-        9: (7, "Independencia do Brasil"),
+        9: (7, "Independência do Brasil"),
         12: (25, "Natal"),
     }
 

@@ -1,6 +1,6 @@
 import Icon from "./Icon";
 
-const PRIORIDADES = { low: "Baixa", medium: "Media", high: "Alta" };
+const PRIORIDADES = { low: "Baixa", medium: "Média", high: "Alta" };
 
 function formatarData(iso) {
   const [ano, mes, dia] = iso.split("-");

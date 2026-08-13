@@ -10,7 +10,7 @@ Teste prático para a vaga de Desenvolvedor(a) Python I da AdviceHealth.
 Precisa apenas de Docker com Compose.
 
 ```bash
-git clone <url-do-repositorio> && cd teste-advicehealth
+git clone https://github.com/Kaylan00/advicetodo.git && cd advicetodo
 docker compose up --build -d
 docker compose exec backend python manage.py seed_demo
 ```

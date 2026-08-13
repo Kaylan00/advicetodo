@@ -3,7 +3,8 @@ from rest_framework import serializers
 
 from accounts.serializers import UserBriefSerializer
 
-from .models import Category, Task
+from .enums import SharePermission
+from .models import Category, Task, TaskShare
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -30,10 +31,26 @@ class OwnerCategoryField(serializers.PrimaryKeyRelatedField):
         return Category.objects.filter(owner=self.context["request"].user)
 
 
+class TaskShareSerializer(serializers.ModelSerializer):
+    user = UserBriefSerializer(read_only=True)
+
+    class Meta:
+        model = TaskShare
+        fields = ("id", "user", "permission", "created_at")
+
+
+class TaskShareCreateSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    permission = serializers.ChoiceField(
+        choices=SharePermission.choices, default=SharePermission.VIEW
+    )
+
+
 class TaskSerializer(serializers.ModelSerializer):
     category = OwnerCategoryField(allow_null=True, required=False)
     category_detail = CategorySerializer(source="category", read_only=True)
     owner = UserBriefSerializer(read_only=True)
+    shares = TaskShareSerializer(many=True, read_only=True)
     is_overdue = serializers.BooleanField(read_only=True)
     my_permission = serializers.SerializerMethodField()
     holiday = serializers.SerializerMethodField()
@@ -54,6 +71,7 @@ class TaskSerializer(serializers.ModelSerializer):
             "my_permission",
             "holiday",
             "owner",
+            "shares",
             "created_at",
             "updated_at",
         )

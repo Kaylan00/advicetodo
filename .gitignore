@@ -19,3 +19,5 @@ npm-debug.log*
 .idea/
 .vscode/
 .DS_Store
+
+docs/PROGRESS.md

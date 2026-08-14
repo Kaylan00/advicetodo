@@ -5,6 +5,17 @@ API em Django REST Framework, front em React e tudo rodando em Docker Compose.
 
 Teste prático para a vaga de Desenvolvedor(a) Python I da AdviceHealth.
 
+## Aplicação no ar
+
+https://advicetodo-web.yellowocean-d40ba3a2.eastus.azurecontainerapps.io
+
+Para entrar sem precisar criar conta, use um dos usuários de demonstração:
+
+| Usuário | Senha | O que ele enxerga |
+|---|---|---|
+| `ana@advice.dev` | `advice2026` | 12 tarefas próprias, em três categorias |
+| `bruno@advice.dev` | `advice2026` | duas tarefas da Ana, uma só leitura e uma com edição |
+
 ## Como rodar
 
 Precisa apenas de Docker com Compose.
@@ -167,9 +178,31 @@ do formato, cache e a degradação.
 2. front: `npm ci`, `eslint` e `vite build`;
 3. e2e: sobe o compose com o Selenium e roda os sete fluxos de interface.
 
-`.github/workflows/deploy.yml` publica as duas imagens no Azure Container Registry e aponta os Web
-Apps para a tag do commit. Ele só executa quando o repositório tem a variável `AZURE_ENABLED` e os
-segredos de acesso, para não quebrar quem clonar o projeto sem conta na Azure.
+`.github/workflows/deploy.yml` publica as duas imagens no GitHub Container Registry e aponta os
+Azure Container Apps para a tag do commit. Ele só executa quando o repositório tem a variável
+`AZURE_ENABLED` e o segredo de acesso, para não quebrar quem clonar o projeto sem conta na Azure.
+
+## Deploy
+
+A aplicação roda em **Azure Container Apps**, dois aplicativos no mesmo ambiente:
+
+- `advicetodo-api`: a imagem do backend, com gunicorn, migrando o banco a cada start.
+- `advicetodo-web`: a imagem do nginx, servindo o build do React e repassando `/api` para a API.
+
+O banco é um **Azure Database for PostgreSQL Flexible Server** (Burstable B1ms), com acesso público
+restrito a serviços da Azure e TLS obrigatório. As imagens ficam no GitHub Container Registry, que é
+gratuito para repositório público e dispensa um registry pago.
+
+Duas coisas mudaram no código para o mesmo artefato servir compose e nuvem:
+
+1. O endereço do backend no nginx virou variável (`BACKEND_URL` e `BACKEND_HOST`), resolvida pelo
+   envsubst na subida do container. No compose aponta para o serviço interno, na Azure para o
+   domínio da API.
+2. `proxy_http_version 1.1`, porque o padrão do `proxy_pass` é HTTP/1.0 e o ingress do Container
+   Apps recusa essa versão com 426.
+
+Segredos (chave do Django e string de conexão) ficam como secrets do próprio Container App, nunca em
+variável de ambiente exposta nem no repositório.
 
 ## O que ficaria para uma próxima rodada
 

@@ -9,6 +9,9 @@ server {
     gzip on;
     gzip_types text/css application/javascript application/json;
 
+    # O padrao do proxy_pass e HTTP/1.0, que o ingress do Container Apps recusa com 426.
+    proxy_http_version 1.1;
+
     # Front e API na mesma origem: sem CORS e sem URL de API compilada no bundle.
     location /api/ {
         proxy_pass ${BACKEND_URL};

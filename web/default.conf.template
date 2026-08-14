@@ -1,0 +1,43 @@
+# O nginx da imagem oficial aplica envsubst nos templates na hora de subir, entao o mesmo
+# arquivo serve para o compose (backend na rede interna) e para a nuvem (backend em outro host).
+server {
+    listen 80;
+    server_name _;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    gzip on;
+    gzip_types text/css application/javascript application/json;
+
+    # Front e API na mesma origem: sem CORS e sem URL de API compilada no bundle.
+    location /api/ {
+        proxy_pass ${BACKEND_URL};
+        proxy_set_header Host ${BACKEND_HOST};
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_ssl_server_name on;
+    }
+
+    location /admin/ {
+        proxy_pass ${BACKEND_URL};
+        proxy_set_header Host ${BACKEND_HOST};
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_ssl_server_name on;
+    }
+
+    location /static/ {
+        proxy_pass ${BACKEND_URL};
+        proxy_set_header Host ${BACKEND_HOST};
+        proxy_ssl_server_name on;
+    }
+
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}

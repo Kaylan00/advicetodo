@@ -10,6 +10,8 @@ RUN npm run build
 
 FROM nginx:1.27-alpine
 
+LABEL org.opencontainers.image.source="https://github.com/Kaylan00/advicetodo"
+
 ENV BACKEND_URL=http://backend:8000 \
     BACKEND_HOST=backend
 

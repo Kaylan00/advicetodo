@@ -1,5 +1,7 @@
 FROM python:3.12-slim AS base
 
+LABEL org.opencontainers.image.source="https://github.com/Kaylan00/advicetodo"
+
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \

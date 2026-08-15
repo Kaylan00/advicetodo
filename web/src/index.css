@@ -734,6 +734,175 @@ svg {
   font-weight: 700;
 }
 
+/* Calendario */
+
+.calendario {
+  margin-bottom: 22px;
+  padding: 20px 22px 22px;
+  background: #fff;
+  border: 1px solid #ece2d1;
+  border-radius: 18px;
+  box-shadow: 0 2px 6px rgba(88, 74, 45, 0.06);
+}
+
+.calendario__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.calendario__topo h2 {
+  font-family: var(--fonte-titulo);
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.6px;
+}
+
+.calendario__navegacao {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.calendario__navegacao .button--ghost {
+  height: 34px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.calendario__semana,
+.calendario__grade {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.calendario__semana {
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.calendario__semana span {
+  padding-left: 4px;
+  color: var(--tinta-suave);
+  font-size: 11.5px;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.calendario__grade {
+  gap: 6px;
+}
+
+.calendario__dia {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 96px;
+  padding: 7px 8px;
+  border: 1px solid #f0e9dc;
+  border-radius: 12px;
+  background: #fffdf8;
+  text-align: left;
+  transition:
+    border-color 0.14s,
+    background 0.14s;
+}
+
+.calendario__dia:hover {
+  border-color: #d9cdb4;
+  background: #fdf8ec;
+}
+
+.calendario__dia--fora {
+  background: transparent;
+  border-color: transparent;
+  opacity: 0.45;
+}
+
+.calendario__numero {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.calendario__dia--hoje .calendario__numero {
+  background: var(--azul);
+  color: #fff;
+}
+
+.calendario__dia--selecionado {
+  border-color: var(--azul);
+  background: #eef3ff;
+  box-shadow: 0 0 0 1px var(--azul);
+}
+
+.calendario__feriado {
+  overflow: hidden;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: #fff0ec;
+  color: #c9331b;
+  font-size: 10px;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendario__tarefas {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.calendario__tarefa {
+  --cor: var(--azul);
+  overflow: hidden;
+  padding: 3px 8px;
+  border-left: 3px solid var(--cor);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--cor) 12%, white);
+  color: color-mix(in srgb, var(--cor) 75%, black);
+  font-size: 11px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.calendario__tarefa:hover {
+  background: color-mix(in srgb, var(--cor) 22%, white);
+}
+
+.calendario__tarefa--feita {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.calendario__resto {
+  padding-left: 4px;
+  color: var(--tinta-suave);
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+@media (max-width: 1000px) {
+  .calendario__dia {
+    min-height: 74px;
+  }
+
+  .calendario__tarefa,
+  .calendario__feriado {
+    display: none;
+  }
+}
+
 /* Filtros */
 
 .filtros {

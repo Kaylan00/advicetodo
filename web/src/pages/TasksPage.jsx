@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import { categories as categoriesApi, tasks as tasksApi } from "../api/endpoints";
 import { useAuth } from "../auth/AuthContext";
+import Calendario from "../components/Calendario";
 import Filters from "../components/Filters";
 import Icon from "../components/Icon";
 import Pagination from "../components/Pagination";
@@ -25,6 +26,7 @@ export default function TasksPage() {
     filtros,
     visao,
     aplicarFiltro,
+    aplicarFiltros,
     aplicarVisao,
     limparFiltros,
     pagina,
@@ -37,6 +39,7 @@ export default function TasksPage() {
 
   const [categorias, setCategorias] = useState([]);
   const [resumo, setResumo] = useState({ total: 0, concluidas: 0 });
+  const [versao, setVersao] = useState(0);
   const [emEdicao, setEmEdicao] = useState(null);
   const [formAberto, setFormAberto] = useState(false);
   const [compartilhando, setCompartilhando] = useState(null);
@@ -57,6 +60,7 @@ export default function TasksPage() {
 
   async function atualizarTudo() {
     await Promise.all([recarregar(), carregarApoio()]);
+    setVersao((atual) => atual + 1);
   }
 
   async function salvarTarefa(payload) {
@@ -163,6 +167,19 @@ export default function TasksPage() {
               </div>
             </div>
           </section>
+
+          {visao === "todas" && (
+            <Calendario
+              diaSelecionado={
+                filtros.due_after && filtros.due_after === filtros.due_before
+                  ? filtros.due_after
+                  : ""
+              }
+              onSelecionarDia={(dia) => aplicarFiltros({ due_after: dia, due_before: dia })}
+              onAbrirTarefa={abrirEdicao}
+              gatilho={versao}
+            />
+          )}
 
           <Filters
             filtros={filtros}

@@ -59,6 +59,11 @@ export function useTasks() {
     setFiltros((atual) => ({ ...atual, [campo]: valor }));
   }, []);
 
+  const aplicarFiltros = useCallback((parciais) => {
+    setPage(1);
+    setFiltros((atual) => ({ ...atual, ...parciais }));
+  }, []);
+
   const aplicarVisao = useCallback((nome) => {
     setPage(1);
     setVisao(nome);
@@ -79,6 +84,7 @@ export function useTasks() {
     filtros,
     visao,
     aplicarFiltro,
+    aplicarFiltros,
     aplicarVisao,
     limparFiltros,
     pagina,

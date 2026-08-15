@@ -18,6 +18,10 @@ export const tasks = {
   revokeShare: (id, userId) => request(`/tasks/${id}/shares/${userId}/`, { method: "DELETE" }),
 };
 
+export const holidays = {
+  list: (year) => request("/holidays/", { params: { year } }),
+};
+
 export const categories = {
   list: () => request("/categories/", { params: { page_size: 100 } }),
   create: (payload) => request("/categories/", { method: "POST", body: payload }),

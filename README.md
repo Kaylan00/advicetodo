@@ -124,6 +124,12 @@ mesmas escolhas, e importar `models` nos outros dois criaria ciclo.
 **Paginação com metadados úteis.** Além de `count` e `next`, a resposta traz `page`, `pages` e
 `page_size`, que é o que o front precisa para desenhar a navegação sem fazer conta.
 
+**Calendário na visão "Todas".** O mês inteiro é carregado numa única requisição pelo intervalo de
+prazos (`due_after` e `due_before`), e não página a página, porque a grade precisa das seis semanas
+de uma vez. Cada dia mostra as tarefas com a cor da categoria, marca os feriados nacionais vindos da
+integração externa e, ao ser clicado, filtra a lista abaixo naquela data. Clicar em uma tarefa
+dentro do calendário abre a mesma janela de edição da lista, sem duplicar tela.
+
 **Front sem biblioteca de estado.** A tela de tarefas cabe em um hook (`useTasks`) com filtros,
 página e recarga. Trazer Redux ou React Query para três telas seria peso sem retorno.
 

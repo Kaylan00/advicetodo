@@ -6,7 +6,8 @@ let onSessionLost = () => {};
 
 function readSession() {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) ?? null;
+    const bruto = localStorage.getItem(STORAGE_KEY) ?? sessionStorage.getItem(STORAGE_KEY);
+    return bruto ? JSON.parse(bruto) : null;
   } catch {
     return null;
   }
@@ -16,14 +17,19 @@ export function getSession() {
   return session;
 }
 
-export function saveSession(next) {
+/** Com "lembrar de mim" a sessao sobrevive ao fechar o navegador; sem ele, morre com a aba. */
+export function saveSession(next, lembrar = true) {
   session = next;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  const guarda = lembrar ? localStorage : sessionStorage;
+  const outra = lembrar ? sessionStorage : localStorage;
+  outra.removeItem(STORAGE_KEY);
+  guarda.setItem(STORAGE_KEY, JSON.stringify(next));
 }
 
 export function clearSession() {
   session = null;
   localStorage.removeItem(STORAGE_KEY);
+  sessionStorage.removeItem(STORAGE_KEY);
 }
 
 export function setSessionLostHandler(handler) {

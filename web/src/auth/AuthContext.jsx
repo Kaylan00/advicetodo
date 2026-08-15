@@ -21,9 +21,9 @@ export function AuthProvider({ children }) {
   const value = useMemo(
     () => ({
       user,
-      async login(email, password) {
+      async login(email, password, lembrar = true) {
         const data = await auth.login(email, password);
-        saveSession({ access: data.access, refresh: data.refresh, user: data.user });
+        saveSession({ access: data.access, refresh: data.refresh, user: data.user }, lembrar);
         setUser(data.user);
       },
       async register(payload) {

@@ -23,6 +23,10 @@ const PATHS = {
   fechar: "M18 6 6 18M6 6l12 12",
   sair: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9",
   compartilhar: "M16 6l-4-4-4 4M12 2v13M4 13v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5",
+  maleta:
+    "M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1ZM8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18",
+  "olho-fechado":
+    "M3 3l18 18M10.6 10.6a3 3 0 0 0 4.2 4.2M9.4 5.3A9.5 9.5 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.2 6.6A17 17 0 0 0 2 12s3.5 7 10 7a9.9 9.9 0 0 0 3.7-.7",
 };
 
 export default function Icon({ name, size = 18, strokeWidth = 1.9 }) {

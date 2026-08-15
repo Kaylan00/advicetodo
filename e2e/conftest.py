@@ -3,6 +3,7 @@ import uuid
 
 import pytest
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -30,7 +31,12 @@ def sessao_limpa(browser):
 
 @pytest.fixture
 def wait(browser):
-    return WebDriverWait(browser, 20)
+    # A lista se redesenha a cada filtro, entao referencia velha nao pode derrubar a espera.
+    return WebDriverWait(
+        browser,
+        20,
+        ignored_exceptions=(NoSuchElementException, StaleElementReferenceException),
+    )
 
 
 @pytest.fixture

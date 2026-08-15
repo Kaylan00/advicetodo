@@ -38,7 +38,7 @@ def test_criar_e_concluir_tarefa(browser, wait, base_url, usuario):
     wait.until(
         EC.text_to_be_present_in_element_attribute(seletor("alternar-tarefa"), "aria-pressed", "true")
     )
-    assert "task--feita" in browser.find_element(*seletor("tarefa")).get_attribute("class")
+    assert "tarefa--feita" in browser.find_element(*seletor("tarefa")).get_attribute("class")
 
 
 def test_filtrar_por_situacao(browser, wait, base_url, usuario):
@@ -76,10 +76,10 @@ def test_paginacao_aparece_quando_passa_de_dez_tarefas(browser, wait, base_url, 
     for numero in range(1, 12):
         criar_tarefa(browser, wait, f"Tarefa numerada {numero:02d}")
 
-    resumo = wait.until(EC.visibility_of_element_located(seletor("pagina-atual")))
-    assert "Página 1 de 2" in resumo.text
+    atual = wait.until(EC.visibility_of_element_located(seletor("pagina-atual")))
+    assert atual.text == "1"
     assert len(browser.find_elements(By.CSS_SELECTOR, '[data-testid="tarefa"]')) == 10
 
     browser.find_element(*seletor("proxima-pagina")).click()
-    wait.until(lambda driver: "Página 2 de 2" in driver.find_element(*seletor("pagina-atual")).text)
+    wait.until(lambda driver: driver.find_element(*seletor("pagina-atual")).text == "2")
     assert len(browser.find_elements(By.CSS_SELECTOR, '[data-testid="tarefa"]')) == 1

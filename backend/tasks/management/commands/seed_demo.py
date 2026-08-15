@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import date, timedelta
 
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
@@ -58,6 +58,18 @@ class Command(BaseCommand):
                 },
             )
             criadas.append(tarefa)
+
+        # Prazo caindo em feriado nacional, para a integração externa aparecer na listagem.
+        sete_de_setembro = date(hoje.year + (0 if (hoje.month, hoje.day) <= (9, 7) else 1), 9, 7)
+        Task.objects.get_or_create(
+            owner=ana,
+            title="Comprar passagens",
+            defaults={
+                "category": categorias["Pessoal"],
+                "priority": Priority.HIGH,
+                "due_date": sete_de_setembro,
+            },
+        )
 
         criadas[2].set_completion(True)
         criadas[5].set_completion(True)

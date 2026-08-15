@@ -1,6 +1,13 @@
 import { useState } from "react";
 
 import Dialog from "./Dialog";
+import Select from "./Select";
+
+const PRIORIDADES = [
+  { valor: "high", rotulo: "Alta", cor: "#e0361e" },
+  { valor: "medium", rotulo: "Média", cor: "#c07c05" },
+  { valor: "low", rotulo: "Baixa", cor: "#12784f" },
+];
 
 const VAZIO = {
   title: "",
@@ -66,25 +73,31 @@ export default function TaskForm({ tarefa, categorias, onClose, onSubmit }) {
           <textarea rows={3} value={form.description} onChange={atualizar("description")} />
         </label>
         <div className="form__row">
-          <label className="field">
+          <div className="field">
             <span>Categoria</span>
-            <select value={form.category} onChange={atualizar("category")} data-testid="campo-categoria">
-              <option value="">Sem categoria</option>
-              {categorias.map((categoria) => (
-                <option key={categoria.id} value={categoria.id}>
-                  {categoria.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="field">
+            <Select
+              valor={form.category}
+              opcoes={[
+                { valor: "", rotulo: "Sem categoria" },
+                ...categorias.map((categoria) => ({
+                  valor: String(categoria.id),
+                  rotulo: categoria.name,
+                  cor: categoria.color,
+                })),
+              ]}
+              onChange={(valor) => setForm({ ...form, category: valor })}
+              testId="campo-categoria"
+            />
+          </div>
+          <div className="field">
             <span>Prioridade</span>
-            <select value={form.priority} onChange={atualizar("priority")}>
-              <option value="low">Baixa</option>
-              <option value="medium">Média</option>
-              <option value="high">Alta</option>
-            </select>
-          </label>
+            <Select
+              valor={form.priority}
+              opcoes={PRIORIDADES}
+              onChange={(valor) => setForm({ ...form, priority: valor })}
+              testId="campo-prioridade"
+            />
+          </div>
           <label className="field">
             <span>Prazo</span>
             <input type="date" value={form.due_date} onChange={atualizar("due_date")} />

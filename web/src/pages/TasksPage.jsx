@@ -203,10 +203,11 @@ export default function TasksPage() {
               </p>
             )}
 
-            {pagina.results.map((tarefa) => (
+            {pagina.results.map((tarefa, indice) => (
               <TaskItem
                 key={tarefa.id}
                 tarefa={tarefa}
+                indice={indice}
                 onToggle={alternar}
                 onEditar={abrirEdicao}
                 onCompartilhar={setCompartilhando}

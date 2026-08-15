@@ -33,7 +33,14 @@ function permissaoDaTarefa(tarefa) {
     : { rotulo: "Somente leitura", classe: "permissao--leitura", icone: "olho" };
 }
 
-export default function TaskItem({ tarefa, onToggle, onEditar, onCompartilhar, onExcluir }) {
+export default function TaskItem({
+  tarefa,
+  indice = 0,
+  onToggle,
+  onEditar,
+  onCompartilhar,
+  onExcluir,
+}) {
   const ehDono = tarefa.my_permission === "owner";
   const podeEditar = ehDono || tarefa.my_permission === "edit";
   const prioridade = PRIORIDADES[tarefa.priority];
@@ -45,6 +52,7 @@ export default function TaskItem({ tarefa, onToggle, onEditar, onCompartilhar, o
       className={`tarefa ${tarefa.is_completed ? "tarefa--feita" : ""} ${
         emDestaque ? "tarefa--destaque" : ""
       }`}
+      style={{ animationDelay: `${Math.min(indice, 9) * 28}ms` }}
       data-testid="tarefa"
     >
       <button

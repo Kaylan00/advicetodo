@@ -1,7 +1,13 @@
-from pages import criar_conta, criar_tarefa, entrar, seletor, titulos_visiveis
+from pages import (
+    criar_conta,
+    criar_tarefa,
+    entrar,
+    escolher_no_select,
+    seletor,
+    titulos_visiveis,
+)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import Select
 
 
 def test_visitante_e_mandado_para_o_login(browser, wait, base_url):
@@ -51,10 +57,10 @@ def test_filtrar_por_situacao(browser, wait, base_url, usuario):
         EC.text_to_be_present_in_element_attribute(seletor("alternar-tarefa"), "aria-pressed", "true")
     )
 
-    Select(browser.find_element(*seletor("filtro-status"))).select_by_value("false")
+    escolher_no_select(browser, wait, "filtro-status", "false")
     wait.until(lambda driver: titulos_visiveis(driver) == ["Tarefa que fica aberta"])
 
-    Select(browser.find_element(*seletor("filtro-status"))).select_by_value("true")
+    escolher_no_select(browser, wait, "filtro-status", "true")
     wait.until(lambda driver: titulos_visiveis(driver) == ["Tarefa que sera concluida"])
 
 

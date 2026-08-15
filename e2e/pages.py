@@ -37,3 +37,9 @@ def criar_tarefa(browser, wait, titulo):
 
 def titulos_visiveis(browser):
     return [item.text for item in browser.find_elements(*seletor("titulo-tarefa"))]
+
+
+def escolher_no_select(browser, wait, campo, valor):
+    """O select e proprio, entao a escolha e abrir a lista e clicar na opcao."""
+    wait.until(EC.element_to_be_clickable(seletor(campo))).click()
+    wait.until(EC.element_to_be_clickable(seletor(f"opcao-{valor or 'vazio'}"))).click()

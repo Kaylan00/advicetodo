@@ -1,65 +1,88 @@
 import Icon from "./Icon";
+import Select from "./Select";
 
-function Chip({ variante, valor, onChange, children, testId }) {
-  return (
-    <span className={`filtro filtro--${variante}`}>
-      <select value={valor} onChange={onChange} data-testid={testId}>
-        {children}
-      </select>
-      <Icon name="seta_baixo" size={15} />
-    </span>
-  );
-}
+const SITUACAO = [
+  { valor: "", rotulo: "Situação" },
+  { valor: "false", rotulo: "Em aberto" },
+  { valor: "true", rotulo: "Concluídas" },
+];
+
+const PRIORIDADE = [
+  { valor: "", rotulo: "Prioridade" },
+  { valor: "high", rotulo: "Alta", cor: "#e0361e" },
+  { valor: "medium", rotulo: "Média", cor: "#c07c05" },
+  { valor: "low", rotulo: "Baixa", cor: "#12784f" },
+];
+
+const PRAZO = [
+  { valor: "", rotulo: "Prazo" },
+  { valor: "true", rotulo: "Atrasadas" },
+  { valor: "false", rotulo: "Dentro do prazo" },
+];
+
+const ORDEM = [
+  { valor: "-created_at", rotulo: "Mais recentes" },
+  { valor: "created_at", rotulo: "Mais antigas" },
+  { valor: "due_date", rotulo: "Prazo mais próximo" },
+  { valor: "title", rotulo: "Título (A-Z)" },
+];
 
 export default function Filters({ filtros, categorias, onChange, onLimpar }) {
-  const campo = (nome) => (event) => onChange(nome, event.target.value);
+  const opcoesDeCategoria = [
+    { valor: "", rotulo: "Categoria" },
+    ...categorias.map((categoria) => ({
+      valor: String(categoria.id),
+      rotulo: categoria.name,
+      cor: categoria.color,
+    })),
+  ];
 
   return (
     <section className="filtros" aria-label="Filtros">
-      <Chip
-        variante="situacao"
+      <Select
+        variante="chip"
+        cor="#1744b9"
         valor={filtros.is_completed}
-        onChange={campo("is_completed")}
+        opcoes={SITUACAO}
+        onChange={(valor) => onChange("is_completed", valor)}
         testId="filtro-status"
-      >
-        <option value="">Situação</option>
-        <option value="false">Em aberto</option>
-        <option value="true">Concluídas</option>
-      </Chip>
+      />
 
-      <Chip
-        variante="categoria"
+      <Select
+        variante="chip"
+        cor="#166b49"
         valor={filtros.category}
-        onChange={campo("category")}
+        opcoes={opcoesDeCategoria}
+        onChange={(valor) => onChange("category", valor)}
         testId="filtro-categoria"
-      >
-        <option value="">Categoria</option>
-        {categorias.map((categoria) => (
-          <option key={categoria.id} value={categoria.id}>
-            {categoria.name}
-          </option>
-        ))}
-      </Chip>
+      />
 
-      <Chip variante="prioridade" valor={filtros.priority} onChange={campo("priority")}>
-        <option value="">Prioridade</option>
-        <option value="high">Alta</option>
-        <option value="medium">Média</option>
-        <option value="low">Baixa</option>
-      </Chip>
+      <Select
+        variante="chip"
+        cor="#5d3bbc"
+        valor={filtros.priority}
+        opcoes={PRIORIDADE}
+        onChange={(valor) => onChange("priority", valor)}
+        testId="filtro-prioridade"
+      />
 
-      <Chip variante="prazo" valor={filtros.overdue} onChange={campo("overdue")}>
-        <option value="">Prazo</option>
-        <option value="true">Atrasadas</option>
-        <option value="false">Dentro do prazo</option>
-      </Chip>
+      <Select
+        variante="chip"
+        cor="#805713"
+        valor={filtros.overdue}
+        opcoes={PRAZO}
+        onChange={(valor) => onChange("overdue", valor)}
+        testId="filtro-prazo"
+      />
 
-      <Chip variante="ordem" valor={filtros.ordering} onChange={campo("ordering")}>
-        <option value="-created_at">Mais recentes</option>
-        <option value="created_at">Mais antigas</option>
-        <option value="due_date">Prazo mais próximo</option>
-        <option value="title">Título (A-Z)</option>
-      </Chip>
+      <Select
+        variante="chip"
+        cor="#4b5563"
+        valor={filtros.ordering}
+        opcoes={ORDEM}
+        onChange={(valor) => onChange("ordering", valor)}
+        testId="filtro-ordem"
+      />
 
       <button type="button" className="button button--ghost" onClick={onLimpar}>
         Limpar

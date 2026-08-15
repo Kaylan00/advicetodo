@@ -925,76 +925,6 @@ svg {
   flex-wrap: wrap;
 }
 
-.filtro {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.filtro select {
-  --cor: var(--azul);
-  height: 40px;
-  min-width: 126px;
-  width: auto;
-  padding: 0 34px 0 15px;
-  appearance: none;
-  border: 1px solid color-mix(in srgb, var(--cor) 32%, white);
-  border-radius: 12px;
-  color: var(--cor);
-  background: color-mix(in srgb, var(--cor) 20%, white);
-  font-size: 13px;
-  font-weight: 750;
-}
-
-.filtro svg {
-  position: absolute;
-  right: 12px;
-  pointer-events: none;
-  color: var(--cor);
-}
-
-.filtro--situacao {
-  --cor: #1744b9;
-}
-.filtro--categoria {
-  --cor: #166b49;
-}
-.filtro--prioridade {
-  --cor: #5d3bbc;
-}
-.filtro--prazo {
-  --cor: #805713;
-}
-.filtro--ordem {
-  --cor: #4b5563;
-}
-
-.filtro select,
-.filtro svg {
-  --cor: inherit;
-}
-
-.filtro--situacao select,
-.filtro--situacao svg {
-  --cor: #1744b9;
-}
-.filtro--categoria select,
-.filtro--categoria svg {
-  --cor: #166b49;
-}
-.filtro--prioridade select,
-.filtro--prioridade svg {
-  --cor: #5d3bbc;
-}
-.filtro--prazo select,
-.filtro--prazo svg {
-  --cor: #805713;
-}
-.filtro--ordem select,
-.filtro--ordem svg {
-  --cor: #4b5563;
-}
-
 .filtros .button--ghost {
   height: 40px;
   padding: 0 17px;
@@ -1397,5 +1327,232 @@ svg {
   .prioridade,
   .permissao {
     display: none;
+  }
+}
+
+/* Select proprio */
+
+.select {
+  position: relative;
+}
+
+.select__gatilho {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  text-align: left;
+}
+
+.select--campo .select__gatilho {
+  height: 42px;
+  padding: 0 13px;
+  border: 1px solid #dad7d0;
+  border-radius: 12px;
+  background: #fff;
+  font-size: 14px;
+  transition: border-color 0.14s;
+}
+
+.select--campo .select__gatilho:hover {
+  border-color: #c4bcae;
+}
+
+.select--chip .select__gatilho {
+  --cor: var(--azul);
+  height: 40px;
+  min-width: 128px;
+  padding: 0 14px;
+  border: 1px solid color-mix(in srgb, var(--cor) 32%, white);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--cor) 18%, white);
+  color: var(--cor);
+  font-size: 13px;
+  font-weight: 750;
+  transition:
+    background 0.14s,
+    transform 0.1s;
+}
+
+.select--chip .select__gatilho:hover {
+  background: color-mix(in srgb, var(--cor) 26%, white);
+}
+
+.select__rotulo {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select__gatilho svg {
+  transition: transform 0.18s ease;
+}
+
+.select--aberto .select__gatilho svg {
+  transform: rotate(180deg);
+}
+
+.select__ponto {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.select__lista {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 100%;
+  max-height: 264px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--linha);
+  border-radius: 12px;
+  box-shadow: 0 14px 30px rgba(88, 74, 45, 0.16);
+  animation: abrirLista 0.15s ease-out;
+}
+
+.select__opcao {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  color: var(--tinta);
+  font-size: 13.5px;
+  font-weight: 650;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.select__opcao--foco {
+  background: #f5f0e4;
+}
+
+.select__opcao[aria-selected="true"] {
+  color: var(--azul);
+  font-weight: 800;
+}
+
+/* Animacoes */
+
+@property --fatia {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.anel {
+  transition: --fatia 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes surgirDialogo {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+@keyframes entrarLinha {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes abrirLista {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pulo {
+  50% {
+    transform: scale(1.28);
+  }
+}
+
+.overlay {
+  animation: aparecer 0.16s ease-out;
+}
+
+.dialog {
+  animation: surgirDialogo 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tarefa {
+  animation: entrarLinha 0.28s ease-out backwards;
+}
+
+.tarefa--feita .check {
+  animation: pulo 0.28s ease-out;
+}
+
+.calendario,
+.progresso {
+  animation: aparecer 0.3s ease-out;
+}
+
+.button,
+.icon-button,
+.visao,
+.categoria,
+.paginacao button {
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s,
+    transform 0.1s;
+}
+
+.button:hover {
+  background: #ef4526;
+}
+
+.button--ghost:hover {
+  background: #f6f1e7;
+}
+
+.button:active,
+.icon-button:active,
+.paginacao button:active:not(:disabled),
+.select__gatilho:active {
+  transform: translateY(1px);
+}
+
+.check {
+  transition:
+    background 0.16s,
+    border-color 0.16s,
+    transform 0.12s;
+}
+
+.check:hover:not(:disabled) {
+  border-color: #35af78;
+  transform: scale(1.08);
+}
+
+/* Quem pediu menos movimento no sistema recebe menos movimento aqui. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

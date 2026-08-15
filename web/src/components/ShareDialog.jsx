@@ -3,6 +3,7 @@ import { useState } from "react";
 import { tasks as tasksApi } from "../api/endpoints";
 import Dialog from "./Dialog";
 import Icon from "./Icon";
+import Select from "./Select";
 
 export default function ShareDialog({ tarefa, onClose, onMudou }) {
   const [compartilhamentos, setCompartilhamentos] = useState(tarefa.shares);
@@ -49,13 +50,18 @@ export default function ShareDialog({ tarefa, onClose, onMudou }) {
               data-testid="campo-email-compartilhar"
             />
           </label>
-          <label className="field">
+          <div className="field">
             <span>Permissão</span>
-            <select value={permissao} onChange={(event) => setPermissao(event.target.value)}>
-              <option value="view">Somente leitura</option>
-              <option value="edit">Pode editar</option>
-            </select>
-          </label>
+            <Select
+              valor={permissao}
+              opcoes={[
+                { valor: "view", rotulo: "Somente leitura", cor: "#5d3dbc" },
+                { valor: "edit", rotulo: "Pode editar", cor: "#0f6142" },
+              ]}
+              onChange={setPermissao}
+              testId="campo-permissao"
+            />
+          </div>
         </div>
         {erro && (
           <p className="alert" role="alert" data-testid="erro-compartilhar">

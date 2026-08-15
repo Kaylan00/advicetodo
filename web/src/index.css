@@ -1,4 +1,29 @@
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("/fonts/nunito-sans.woff2") format("woff2");
+  font-weight: 100 1000;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mali";
+  src: url("/fonts/mali.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
 :root {
+  --fonte: "Inter", "Segoe UI", system-ui, sans-serif;
+  --fonte-titulo: "Nunito Sans", "Inter", sans-serif;
+  --fonte-marca: "Mali", "Nunito Sans", cursive;
+
   --azul: #164ddd;
   --tinta: #151821;
   --tinta-suave: #696d78;
@@ -20,7 +45,7 @@ body {
   min-height: 100%;
   background: #ece2ce;
   color: var(--tinta);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--fonte);
 }
 
 h1,
@@ -154,9 +179,10 @@ svg {
   gap: 10px;
   margin: 0 0 30px;
   color: var(--azul);
+  font-family: var(--fonte-marca);
   font-size: 30px;
-  font-weight: 800;
-  letter-spacing: -1.5px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 .marca__selo {
@@ -170,7 +196,9 @@ svg {
 }
 
 .auth__card h1 {
-  font-size: 30px;
+  font-family: var(--fonte-titulo);
+  font-size: 32px;
+  font-weight: 900;
   letter-spacing: -1px;
   color: var(--tinta);
 }
@@ -246,9 +274,10 @@ svg {
   gap: 10px;
   margin: 0 0 38px;
   color: var(--azul);
+  font-family: var(--fonte-marca);
   font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -1.5px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 .visoes {
@@ -481,9 +510,11 @@ svg {
 
 .abertura h1 {
   color: var(--azul);
+  font-family: var(--fonte-titulo);
   font-size: 68px;
+  font-weight: 900;
   line-height: 0.93;
-  letter-spacing: -4px;
+  letter-spacing: -3px;
 }
 
 .abertura h1 span {
@@ -520,7 +551,9 @@ svg {
 }
 
 .progresso__texto strong {
+  font-family: var(--fonte-titulo);
   font-size: 28px;
+  font-weight: 900;
   letter-spacing: -0.7px;
 }
 
@@ -552,7 +585,9 @@ svg {
   position: relative;
   z-index: 1;
   color: var(--azul);
+  font-family: var(--fonte-titulo);
   font-size: 27px;
+  font-weight: 900;
   line-height: 1;
   text-align: center;
 }

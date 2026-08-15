@@ -5,6 +5,8 @@ export default function AuthLayout({ chamada, apoio, title, subtitle, children, 
     <main className="acesso">
       <section className="acesso__vitrine">
         <div className="acesso__conteudo">
+          <img className="acesso__ilustracao" src="/ilustracoes/tarefas.svg" alt="" />
+
           <p className="marca">
             <Icon name="concluido" size={40} weight="duotone" />
             AdviceTodo
@@ -13,8 +15,6 @@ export default function AuthLayout({ chamada, apoio, title, subtitle, children, 
           <h1>{chamada}</h1>
           <p className="acesso__apoio">{apoio}</p>
         </div>
-
-        <img className="acesso__ilustracao" src="/ilustracoes/tarefas.svg" alt="" />
       </section>
 
       <section className="acesso__painel">

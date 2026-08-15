@@ -157,7 +157,7 @@ svg {
 
 .acesso {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(340px, 38%) 1fr;
   min-height: 100vh;
 }
 
@@ -195,12 +195,11 @@ svg {
 }
 
 .acesso__ilustracao {
-  position: absolute;
-  right: clamp(20px, 4vw, 56px);
-  bottom: clamp(20px, 4vh, 44px);
-  z-index: 2;
+  align-self: flex-start;
   width: auto;
-  max-height: clamp(170px, 26vh, 250px);
+  max-width: 100%;
+  max-height: clamp(150px, 24vh, 230px);
+  margin-bottom: 30px;
 }
 
 @media (max-height: 700px) {
@@ -310,6 +309,30 @@ svg {
   width: 17px;
   height: 17px;
   accent-color: var(--azul);
+}
+
+.separador {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2px 0;
+  color: var(--tinta-suave);
+  font-size: 13px;
+}
+
+.separador::before,
+.separador::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--linha);
+}
+
+.acesso__dica {
+  margin-top: -4px;
+  color: var(--tinta-suave);
+  font-size: 12px;
+  text-align: center;
 }
 
 .button--bloco {

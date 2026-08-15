@@ -5,6 +5,9 @@ import { useAuth } from "../auth/AuthContext";
 import AuthLayout from "../components/AuthLayout";
 import Icon from "../components/Icon";
 
+// Usuario criado pelo comando seed_demo, com tarefas, categorias e compartilhamento prontos.
+const DEMO = { email: "ana@advice.dev", senha: "advice2026" };
+
 export default function LoginPage() {
   const { user, login } = useAuth();
   const navigate = useNavigate();
@@ -28,6 +31,18 @@ export default function LoginPage() {
           ? "E-mail ou senha inválidos."
           : (problema.firstMessage ?? "Não foi possível entrar."),
       );
+    } finally {
+      setEnviando(false);
+    }
+  }
+
+  async function entrarComDemo() {
+    setEnviando(true);
+    try {
+      await login(DEMO.email, DEMO.senha, false);
+      navigate("/tarefas", { replace: true });
+    } catch {
+      setErro("A conta de demonstração não está disponível neste ambiente.");
     } finally {
       setEnviando(false);
     }
@@ -103,6 +118,22 @@ export default function LoginPage() {
         <button type="submit" className="button button--bloco" disabled={enviando}>
           {enviando ? "Entrando..." : "Entrar"}
         </button>
+
+        <p className="separador">ou</p>
+
+        <button
+          type="button"
+          className="button button--ghost button--bloco"
+          onClick={entrarComDemo}
+          disabled={enviando}
+          data-testid="entrar-demo"
+        >
+          <Icon name="sol" size={18} />
+          Entrar na demonstração
+        </button>
+        <small className="acesso__dica">
+          Abre a conta {DEMO.email}, com dados de exemplo.
+        </small>
       </form>
     </AuthLayout>
   );

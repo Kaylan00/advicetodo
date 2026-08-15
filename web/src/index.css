@@ -194,11 +194,10 @@ svg {
   flex-direction: column;
 }
 
+/* Mesma largura da coluna de texto, para a ilustracao e a chamada dividirem o mesmo eixo. */
 .acesso__ilustracao {
-  align-self: flex-start;
-  width: auto;
-  max-width: 100%;
-  max-height: clamp(150px, 24vh, 230px);
+  width: 100%;
+  height: auto;
   margin-bottom: 30px;
 }
 
@@ -241,16 +240,13 @@ svg {
 
 .acesso__painel {
   display: grid;
-  place-items: center;
-  padding: 40px 24px;
+  align-content: center;
+  padding: clamp(40px, 7vw, 130px);
   background: #fff;
 }
 
 .acesso__card {
-  width: min(430px, 100%);
-  padding: 36px;
-  border: 1px solid #e9e3d7;
-  border-radius: 16px;
+  width: 100%;
 }
 
 .acesso__card input {

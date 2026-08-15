@@ -4,14 +4,14 @@ import { categories as categoriesApi } from "../api/endpoints";
 import Icon from "./Icon";
 
 const VISOES = [
-  { id: "hoje", rotulo: "Hoje", icone: "sol" },
+  { id: "hoje", rotulo: "Hoje", icone: "calendario" },
   { id: "semana", rotulo: "Esta semana", icone: "calendario" },
   { id: "todas", rotulo: "Todas", icone: "lista" },
   { id: "compartilhadas", rotulo: "Compartilhadas", icone: "pessoas" },
   { id: "concluidas", rotulo: "Concluídas", icone: "concluido" },
 ];
 
-const CORES = ["#2563EB", "#15803D", "#6D28D9", "#B45309", "#BE123C", "#0F766E"];
+const CORES = ["#164ddd", "#17714d", "#5f3fc1", "#805713", "#be123c", "#0f766e"];
 
 export default function Sidebar({
   categorias,
@@ -50,11 +50,13 @@ export default function Sidebar({
   return (
     <aside className="lateral">
       <p className="marca">
-        <Icon name="concluido" size={28} strokeWidth={2.2} />
+        <span className="marca__selo">
+          <Icon name="check" size={22} strokeWidth={2.6} />
+        </span>
         AdviceTodo
       </p>
 
-      <nav className="visoes" aria-label="Visões">
+      <nav className="visoes" aria-label="Navegação principal">
         {VISOES.map((visao) => (
           <button
             key={visao.id}
@@ -63,7 +65,7 @@ export default function Sidebar({
             onClick={() => onVisao(visao.id)}
             data-testid={`visao-${visao.id}`}
           >
-            <Icon name={visao.icone} />
+            <Icon name={visao.icone} size={19} />
             {visao.rotulo}
           </button>
         ))}
@@ -82,7 +84,7 @@ export default function Sidebar({
             }`}
             onClick={() => onCategoria(String(categoria.id))}
           >
-            <Icon name="etiqueta" size={16} />
+            <Icon name="etiqueta" size={18} />
             {categoria.name}
             <em className="categoria__contagem">{categoria.tasks_count}</em>
             <span
@@ -93,7 +95,7 @@ export default function Sidebar({
               onClick={(event) => excluirCategoria(categoria, event)}
               onKeyDown={(event) => event.key === "Enter" && excluirCategoria(categoria, event)}
             >
-              <Icon name="lixeira" size={14} />
+              <Icon name="lixeira" size={15} />
             </span>
           </button>
         ))}
@@ -130,19 +132,19 @@ export default function Sidebar({
         ) : (
           <button
             type="button"
-            className="categoria"
-            style={{ "--cor": "#94a3b8" }}
+            className="categoria categoria--nova"
+            style={{ "--cor": "#8b8f99" }}
             onClick={() => setAbrindoForm(true)}
             data-testid="nova-categoria"
           >
-            <Icon name="mais" size={16} />
+            <Icon name="mais" size={18} />
             Nova categoria
           </button>
         )}
       </div>
 
       <button type="button" className="button" onClick={onCriarTarefa} data-testid="nova-tarefa">
-        <Icon name="mais" size={18} />
+        <Icon name="mais" size={19} />
         Criar tarefa
       </button>
     </aside>

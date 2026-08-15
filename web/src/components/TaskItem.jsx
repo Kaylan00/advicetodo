@@ -1,12 +1,13 @@
 import Icon from "./Icon";
 
 const PRIORIDADES = {
-  low: { rotulo: "Baixa", classe: "chip--baixa", icone: "desce" },
-  medium: { rotulo: "Média", classe: "chip--media", icone: "traco" },
-  high: { rotulo: "Alta", classe: "chip--alta", icone: "sobe" },
+  low: { rotulo: "Baixa", classe: "prioridade--baixa", seta: "↓" },
+  medium: { rotulo: "Média", classe: "prioridade--media", seta: "—" },
+  high: { rotulo: "Alta", classe: "prioridade--alta", seta: "↑" },
 };
 
 const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+const CORES_AVATAR = ["#335fc0", "#db7459", "#3b8a72", "#7a5cb8"];
 
 function formatarData(iso) {
   const [, mes, dia] = iso.split("-");
@@ -18,24 +19,26 @@ function iniciais(usuario) {
   return base.trim().slice(0, 2).toUpperCase();
 }
 
-function permissaoDoCartao(tarefa) {
+function permissaoDaTarefa(tarefa) {
   if (tarefa.my_permission !== "owner") {
     return tarefa.my_permission === "edit"
-      ? { rotulo: "Pode editar", classe: "chip--edicao", icone: "lapis" }
-      : { rotulo: "Somente leitura", classe: "chip--leitura", icone: "olho" };
+      ? { rotulo: "Pode editar", classe: "permissao--edicao", icone: "pessoas" }
+      : { rotulo: "Somente leitura", classe: "permissao--leitura", icone: "olho" };
+  }
+  if (tarefa.shares.length === 0) {
+    return { rotulo: "Compartilhar", classe: "permissao--vazia", icone: "compartilhar" };
   }
   return tarefa.shares.some((item) => item.permission === "edit")
-    ? { rotulo: "Pode editar", classe: "chip--edicao", icone: "lapis" }
-    : { rotulo: "Somente leitura", classe: "chip--leitura", icone: "olho" };
+    ? { rotulo: "Pode editar", classe: "permissao--edicao", icone: "pessoas" }
+    : { rotulo: "Somente leitura", classe: "permissao--leitura", icone: "olho" };
 }
 
 export default function TaskItem({ tarefa, onToggle, onEditar, onCompartilhar, onExcluir }) {
   const ehDono = tarefa.my_permission === "owner";
   const podeEditar = ehDono || tarefa.my_permission === "edit";
   const prioridade = PRIORIDADES[tarefa.priority];
-  const permissao = permissaoDoCartao(tarefa);
+  const permissao = permissaoDaTarefa(tarefa);
   const emDestaque = !tarefa.is_completed && (tarefa.holiday || tarefa.is_overdue);
-  const convidados = tarefa.shares.slice(0, 3);
 
   return (
     <article
@@ -53,112 +56,100 @@ export default function TaskItem({ tarefa, onToggle, onEditar, onCompartilhar, o
         aria-label={tarefa.is_completed ? "Reabrir tarefa" : "Concluir tarefa"}
         data-testid="alternar-tarefa"
       >
-        {tarefa.is_completed && <Icon name="check" size={13} strokeWidth={3} />}
+        {tarefa.is_completed && <Icon name="check" size={14} strokeWidth={2.6} />}
       </button>
 
-      <span className="tarefa__titulo" data-testid="titulo-tarefa">
-        {tarefa.title}
+      <div className="tarefa__texto">
+        <span className="tarefa__titulo" data-testid="titulo-tarefa">
+          {tarefa.title}
+        </span>
+        {tarefa.description && <span className="tarefa__descricao">{tarefa.description}</span>}
+      </div>
+
+      {tarefa.category_detail ? (
+        <span className="etiqueta" style={{ "--cor": tarefa.category_detail.color }}>
+          {tarefa.category_detail.name}
+        </span>
+      ) : (
+        <span />
+      )}
+
+      <span className={`prioridade ${prioridade.classe}`}>
+        {prioridade.seta} {prioridade.rotulo}
       </span>
 
-      <div className="tarefa__meta">
-        {tarefa.category_detail && (
-          <span className="chip" style={{ "--cor": tarefa.category_detail.color }}>
-            <Icon name="etiqueta" size={13} />
-            {tarefa.category_detail.name}
+      {tarefa.holiday && tarefa.due_date ? (
+        <span className="feriado">
+          <Icon name="calendario" size={15} />
+          <span>
+            <b>{tarefa.holiday}</b>
+            <small>{formatarData(tarefa.due_date)}</small>
           </span>
-        )}
-
-        <span className={`chip ${prioridade.classe}`}>
-          <Icon name={prioridade.icone} size={13} />
-          {prioridade.rotulo}
         </span>
+      ) : tarefa.due_date ? (
+        <span className={`prazo ${tarefa.is_overdue ? "prazo--vencido" : ""}`}>
+          <Icon name="calendario" size={15} />
+          {formatarData(tarefa.due_date)}
+        </span>
+      ) : (
+        <span />
+      )}
 
-        {tarefa.holiday && tarefa.due_date && (
-          <span className="feriado">
-            <Icon name="calendario" size={13} />
-            {tarefa.holiday} · {formatarData(tarefa.due_date)}
+      <span className="avatares">
+        {tarefa.shares.slice(0, 3).map((item, indice) => (
+          <span
+            key={item.id}
+            title={item.user.email}
+            style={{ background: CORES_AVATAR[indice % CORES_AVATAR.length] }}
+          >
+            {iniciais(item.user)}
           </span>
+        ))}
+        {tarefa.shares.length > 3 && (
+          <span style={{ background: "#8a8f9c" }}>+{tarefa.shares.length - 3}</span>
         )}
+      </span>
 
-        {tarefa.due_date && !tarefa.holiday && (
-          <span className={`prazo ${tarefa.is_overdue ? "prazo--vencido" : ""}`}>
-            <Icon name="calendario" size={14} />
-            {formatarData(tarefa.due_date)}
-          </span>
+      {ehDono ? (
+        <button
+          type="button"
+          className={`permissao ${permissao.classe}`}
+          onClick={() => onCompartilhar(tarefa)}
+          data-testid="compartilhar-tarefa"
+        >
+          <Icon name={permissao.icone} size={14} />
+          {permissao.rotulo}
+        </button>
+      ) : (
+        <span className={`permissao ${permissao.classe}`}>
+          <Icon name={permissao.icone} size={14} />
+          {permissao.rotulo}
+        </span>
+      )}
+
+      <span className="acoes">
+        {podeEditar && (
+          <button
+            type="button"
+            className="icon-button"
+            onClick={() => onEditar(tarefa)}
+            aria-label="Editar tarefa"
+          >
+            <Icon name="lapis" size={17} />
+          </button>
         )}
-
-        {convidados.length > 0 && (
-          <span className="avatares">
-            {convidados.map((item) => (
-              <span key={item.id} title={item.user.email}>
-                {iniciais(item.user)}
-              </span>
-            ))}
-            {tarefa.shares.length > 3 && <span>+{tarefa.shares.length - 3}</span>}
-          </span>
+        {ehDono && (
+          <button
+            type="button"
+            className="icon-button icon-button--perigo"
+            onClick={() => onExcluir(tarefa)}
+            aria-label="Excluir tarefa"
+            data-testid="excluir-tarefa"
+          >
+            <Icon name="lixeira" size={17} />
+          </button>
         )}
-
-        {tarefa.shares.length > 0 &&
-          (ehDono ? (
-            <button
-              type="button"
-              className={`chip ${permissao.classe}`}
-              onClick={() => onCompartilhar(tarefa)}
-              data-testid="compartilhar-tarefa"
-            >
-              <Icon name={permissao.icone} size={13} />
-              {permissao.rotulo}
-              <Icon name="seta_baixo" size={12} />
-            </button>
-          ) : (
-            <span className={`chip ${permissao.classe}`}>
-              <Icon name={permissao.icone} size={13} />
-              {permissao.rotulo}
-            </span>
-          ))}
-
-        {!ehDono && tarefa.shares.length === 0 && (
-          <span className={`chip ${permissao.classe}`}>
-            <Icon name={permissao.icone} size={13} />
-            {permissao.rotulo}
-          </span>
-        )}
-
-        <div className="acoes">
-          {ehDono && tarefa.shares.length === 0 && (
-            <button
-              type="button"
-              className="icon-button"
-              onClick={() => onCompartilhar(tarefa)}
-              aria-label="Compartilhar tarefa"
-              data-testid="compartilhar-tarefa"
-            >
-              <Icon name="compartilhar" size={16} />
-            </button>
-          )}
-          {podeEditar && (
-            <button
-              type="button"
-              className="icon-button"
-              onClick={() => onEditar(tarefa)}
-              aria-label="Editar tarefa"
-            >
-              <Icon name="lapis" size={16} />
-            </button>
-          )}
-          {ehDono && (
-            <button
-              type="button"
-              className="icon-button icon-button--perigo"
-              onClick={() => onExcluir(tarefa)}
-              aria-label="Excluir tarefa"
-              data-testid="excluir-tarefa"
-            >
-              <Icon name="lixeira" size={16} />
-            </button>
-          )}
-        </div>
-      </div>
+      </span>
     </article>
   );
 }

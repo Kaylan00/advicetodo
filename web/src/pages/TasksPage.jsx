@@ -11,6 +11,14 @@ import TaskForm from "../components/TaskForm";
 import TaskItem from "../components/TaskItem";
 import { useTasks } from "../hooks/useTasks";
 
+const TITULOS = {
+  hoje: "Tarefas de hoje",
+  semana: "Tarefas da semana",
+  todas: "Minhas tarefas",
+  compartilhadas: "Compartilhadas comigo",
+  concluidas: "Tarefas concluídas",
+};
+
 export default function TasksPage() {
   const { user, logout } = useAuth();
   const {
@@ -81,7 +89,7 @@ export default function TasksPage() {
     setEmEdicao(null);
   }
 
-  const fatia = resumo.total ? Math.round((resumo.concluidas / resumo.total) * 100) : 0;
+  const percentual = resumo.total ? Math.round((resumo.concluidas / resumo.total) * 100) : 0;
   const nome = user.first_name || user.email;
 
   return (
@@ -96,10 +104,10 @@ export default function TasksPage() {
         onCriarTarefa={() => setFormAberto(true)}
       />
 
-      <main className="conteudo">
+      <section className="conteudo">
         <header className="topo">
           <label className="busca">
-            <Icon name="busca" size={17} />
+            <Icon name="busca" size={19} />
             <input
               type="search"
               placeholder="Buscar uma tarefa..."
@@ -109,10 +117,11 @@ export default function TasksPage() {
             />
           </label>
 
+          <button type="button" className="sino" disabled aria-label="Notificações">
+            <Icon name="sino" size={19} />
+          </button>
+
           <div className="topo__usuario">
-            <button type="button" className="icon-button" disabled aria-label="Notificações">
-              <Icon name="sino" />
-            </button>
             <span className="avatar">{nome.slice(0, 2).toUpperCase()}</span>
             <span data-testid="usuario-logado">{nome}</span>
             <button
@@ -122,73 +131,98 @@ export default function TasksPage() {
               aria-label="Sair"
               data-testid="sair"
             >
-              <Icon name="sair" />
+              <Icon name="sair" size={19} />
             </button>
           </div>
         </header>
 
-        <section className="abertura">
-          <div>
-            <h1>
-              Vamos fazer <span>acontecer?</span>
-            </h1>
-            <p>
-              {pagina.count} {pagina.count === 1 ? "tarefa" : "tarefas"} para deixar o dia mais leve
-            </p>
-          </div>
+        <div className="pagina">
+          <section className="abertura">
+            <div>
+              <h1>
+                Vamos fazer<span>acontecer?</span>
+              </h1>
+              <p>
+                {pagina.count} {pagina.count === 1 ? "tarefa" : "tarefas"} para deixar o dia mais
+                leve
+              </p>
+            </div>
 
-          <div className="progresso">
-            <div className="anel" style={{ "--fatia": `${fatia}%` }}>
-              <div className="anel__miolo">
-                <strong className="anel__numero">{resumo.concluidas}</strong>
-                <span className="anel__texto">de {resumo.total}</span>
-                <span className="anel__texto">concluídas</span>
+            <div className="progresso">
+              <div className="progresso__texto">
+                <small>Seu progresso</small>
+                <strong>
+                  {resumo.concluidas} de {resumo.total}
+                </strong>
+                <span>tarefas concluídas</span>
+              </div>
+              <div className="anel" style={{ "--fatia": `${percentual * 3.6}deg` }}>
+                <b>
+                  {percentual}%<small>concluído</small>
+                </b>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <Filters
-          filtros={filtros}
-          categorias={categorias}
-          onChange={aplicarFiltro}
-          onLimpar={limparFiltros}
-        />
+          <Filters
+            filtros={filtros}
+            categorias={categorias}
+            onChange={aplicarFiltro}
+            onLimpar={limparFiltros}
+          />
 
-        {erro && (
-          <p className="alert" role="alert">
-            {erro}
-          </p>
-        )}
+          {erro && (
+            <p className="alert" role="alert">
+              {erro}
+            </p>
+          )}
 
-        {carregando && <p className="lista__estado">Carregando...</p>}
+          <section className="quadro">
+            <header className="quadro__topo">
+              <h2>
+                {TITULOS[visao]}
+                <span>
+                  {pagina.count} {pagina.count === 1 ? "tarefa" : "tarefas"}
+                </span>
+              </h2>
+              <button
+                type="button"
+                className="quadro__adicionar"
+                onClick={() => setFormAberto(true)}
+              >
+                <Icon name="mais" size={15} />
+                Adicionar tarefa
+              </button>
+            </header>
 
-        {!carregando && pagina.results.length === 0 && (
-          <p className="lista__estado" data-testid="lista-vazia">
-            Nenhuma tarefa por aqui. Que tal criar a primeira?
-          </p>
-        )}
+            {carregando && <p className="estado">Carregando...</p>}
 
-        <div className="lista">
-          {pagina.results.map((tarefa) => (
-            <TaskItem
-              key={tarefa.id}
-              tarefa={tarefa}
-              onToggle={alternar}
-              onEditar={abrirEdicao}
-              onCompartilhar={setCompartilhando}
-              onExcluir={excluir}
-            />
-          ))}
+            {!carregando && pagina.results.length === 0 && (
+              <p className="estado" data-testid="lista-vazia">
+                Nenhuma tarefa por aqui. Que tal criar a primeira?
+              </p>
+            )}
+
+            {pagina.results.map((tarefa) => (
+              <TaskItem
+                key={tarefa.id}
+                tarefa={tarefa}
+                onToggle={alternar}
+                onEditar={abrirEdicao}
+                onCompartilhar={setCompartilhando}
+                onExcluir={excluir}
+              />
+            ))}
+          </section>
+
+          <Pagination
+            page={pagina.page ?? page}
+            pages={pagina.pages ?? 1}
+            count={pagina.count ?? 0}
+            onChange={setPage}
+          />
         </div>
-
-        <Pagination
-          page={pagina.page ?? page}
-          pages={pagina.pages ?? 1}
-          count={pagina.count ?? 0}
-          onChange={setPage}
-        />
-      </main>
+      </section>
 
       {formAberto && (
         <TaskForm

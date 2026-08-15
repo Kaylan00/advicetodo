@@ -79,10 +79,10 @@ export default function TaskItem({ tarefa, onToggle, onEditar, onCompartilhar, o
       </span>
 
       {tarefa.holiday && tarefa.due_date ? (
-        <span className="feriado">
+        <span className="feriado" title={tarefa.holiday}>
           <Icon name="calendario" size={15} />
           <span>
-            <b>{tarefa.holiday}</b>
+            <b>Feriado nacional</b>
             <small>{formatarData(tarefa.due_date)}</small>
           </span>
         </span>

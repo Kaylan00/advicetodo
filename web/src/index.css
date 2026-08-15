@@ -2,8 +2,8 @@
   --azul: #164ddd;
   --tinta: #151821;
   --tinta-suave: #696d78;
-  --papel: #fffdf6;
-  --creme: #faf1de;
+  --papel: #fdf8ec;
+  --creme: #fdf8ec;
   --linha: #e5dbc7;
   --coral: #ff5533;
   --menta: #c3ecd4;
@@ -77,12 +77,12 @@ svg {
   justify-content: center;
   gap: 10px;
   border: 0;
-  border-radius: 14px;
+  border-radius: 999px;
   background: var(--coral);
   color: #fff;
   font-size: 15px;
   font-weight: 800;
-  box-shadow: 0 10px 22px rgba(255, 98, 75, 0.2);
+  box-shadow: 0 10px 22px rgba(255, 98, 75, 0.28);
 }
 
 .button:disabled {
@@ -654,71 +654,37 @@ svg {
 /* Quadro de tarefas */
 
 .quadro {
-  overflow: hidden;
-  background: #fff;
-  border: 1px solid #e0d9ce;
-  border-radius: 17px;
-  box-shadow: var(--sombra);
-}
-
-.quadro__topo {
-  height: 56px;
-  padding: 0 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #e9e4db;
-}
-
-.quadro__topo h2 {
-  font-size: 17px;
-}
-
-.quadro__topo h2 span {
-  margin-left: 8px;
-  color: #848791;
-  font-size: 12px;
-  font-weight: 400;
-}
-
-.quadro__adicionar {
-  height: 35px;
-  padding: 0 13px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  border: 1px solid #a9bdf1;
-  border-radius: 10px;
-  color: var(--azul);
-  background: #fff;
-  font-size: 12px;
-  font-weight: 750;
+  display: grid;
+  gap: 12px;
 }
 
 .estado {
   padding: 34px;
   text-align: center;
   color: var(--tinta-suave);
+  background: #fff;
+  border: 1px dashed #ddd4c4;
+  border-radius: 16px;
   font-size: 14px;
 }
 
 .tarefa {
-  min-height: 91px;
-  padding: 12px 16px;
+  min-height: 84px;
+  padding: 14px 18px;
   display: grid;
-  grid-template-columns: 33px minmax(220px, 1.7fr) 105px 79px minmax(105px, 0.75fr) 93px 131px 66px;
+  grid-template-columns: 33px minmax(220px, 1.7fr) 118px 92px minmax(105px, 0.75fr) 93px 138px 66px;
   gap: 12px;
   align-items: center;
-  border-bottom: 1px solid #e9e4dc;
-}
-
-.tarefa:last-child {
-  border-bottom: 0;
+  background: #fff;
+  border: 1px solid #ece2d1;
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(88, 74, 45, 0.06);
 }
 
 .tarefa--destaque {
-  background: #fff3cf;
-  box-shadow: inset 4px 0 #e8a300;
+  background: #fff4d6;
+  border-color: #f0c75f;
+  box-shadow: 0 2px 6px rgba(160, 116, 20, 0.12);
 }
 
 .check {
@@ -788,21 +754,27 @@ svg {
 }
 
 .prioridade {
+  --cor: #a2680a;
+  width: max-content;
+  padding: 6px 11px;
   display: flex;
   align-items: center;
   gap: 6px;
+  border-radius: 999px;
+  color: var(--cor);
+  background: color-mix(in srgb, var(--cor) 17%, white);
   font-size: 11px;
   font-weight: 750;
 }
 
 .prioridade--alta {
-  color: #d6301a;
+  --cor: #e0361e;
 }
 .prioridade--media {
-  color: #a2680a;
+  --cor: #c07c05;
 }
 .prioridade--baixa {
-  color: #12784f;
+  --cor: #12784f;
 }
 
 .prazo {

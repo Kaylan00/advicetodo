@@ -177,24 +177,7 @@ export default function TasksPage() {
             </p>
           )}
 
-          <section className="quadro">
-            <header className="quadro__topo">
-              <h2>
-                {TITULOS[visao]}
-                <span>
-                  {pagina.count} {pagina.count === 1 ? "tarefa" : "tarefas"}
-                </span>
-              </h2>
-              <button
-                type="button"
-                className="quadro__adicionar"
-                onClick={() => setFormAberto(true)}
-              >
-                <Icon name="mais" size={15} />
-                Adicionar tarefa
-              </button>
-            </header>
-
+          <section className="quadro" aria-label={TITULOS[visao]}>
             {carregando && <p className="estado">Carregando...</p>}
 
             {!carregando && pagina.results.length === 0 && (

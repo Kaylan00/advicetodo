@@ -1,64 +1,69 @@
 import Icon from "./Icon";
 
+function Chip({ variante, valor, onChange, children, testId }) {
+  return (
+    <span className={`filtro filtro--${variante}`}>
+      <select value={valor} onChange={onChange} data-testid={testId}>
+        {children}
+      </select>
+      <Icon name="seta_baixo" size={15} />
+    </span>
+  );
+}
+
 export default function Filters({ filtros, categorias, onChange, onLimpar }) {
   const campo = (nome) => (event) => onChange(nome, event.target.value);
 
   return (
     <section className="filtros" aria-label="Filtros">
-      <label className="filtros__busca">
-        <Icon name="search" size={16} />
-        <input
-          type="search"
-          placeholder="Buscar por título ou descrição"
-          value={filtros.search}
-          onChange={campo("search")}
-          data-testid="busca"
-        />
-      </label>
-
-      <select value={filtros.is_completed} onChange={campo("is_completed")} data-testid="filtro-status">
-        <option value="">Todas</option>
+      <Chip
+        variante="situacao"
+        valor={filtros.is_completed}
+        onChange={campo("is_completed")}
+        testId="filtro-status"
+      >
+        <option value="">Situação</option>
         <option value="false">Em aberto</option>
         <option value="true">Concluídas</option>
-      </select>
+      </Chip>
 
-      <select value={filtros.category} onChange={campo("category")} data-testid="filtro-categoria">
-        <option value="">Qualquer categoria</option>
+      <Chip
+        variante="categoria"
+        valor={filtros.category}
+        onChange={campo("category")}
+        testId="filtro-categoria"
+      >
+        <option value="">Categoria</option>
         {categorias.map((categoria) => (
           <option key={categoria.id} value={categoria.id}>
             {categoria.name}
           </option>
         ))}
-      </select>
+      </Chip>
 
-      <select value={filtros.priority} onChange={campo("priority")}>
-        <option value="">Qualquer prioridade</option>
+      <Chip variante="prioridade" valor={filtros.priority} onChange={campo("priority")}>
+        <option value="">Prioridade</option>
         <option value="high">Alta</option>
         <option value="medium">Média</option>
         <option value="low">Baixa</option>
-      </select>
+      </Chip>
 
-      <select value={filtros.scope} onChange={campo("scope")} data-testid="filtro-escopo">
-        <option value="">Minhas e compartilhadas</option>
-        <option value="owned">Somente minhas</option>
-        <option value="shared">Somente compartilhadas comigo</option>
-      </select>
-
-      <select value={filtros.overdue} onChange={campo("overdue")}>
-        <option value="">Qualquer prazo</option>
+      <Chip variante="prazo" valor={filtros.overdue} onChange={campo("overdue")}>
+        <option value="">Prazo</option>
         <option value="true">Atrasadas</option>
         <option value="false">Dentro do prazo</option>
-      </select>
+      </Chip>
 
-      <select value={filtros.ordering} onChange={campo("ordering")}>
+      <Chip variante="ordem" valor={filtros.ordering} onChange={campo("ordering")}>
         <option value="-created_at">Mais recentes</option>
         <option value="created_at">Mais antigas</option>
         <option value="due_date">Prazo mais próximo</option>
         <option value="title">Título (A-Z)</option>
-      </select>
+      </Chip>
 
       <button type="button" className="button button--ghost" onClick={onLimpar}>
         Limpar
+        <Icon name="fechar" size={15} />
       </button>
     </section>
   );

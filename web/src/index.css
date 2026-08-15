@@ -379,22 +379,17 @@ svg {
 /* Moldura */
 
 .app {
-  width: min(1440px, calc(100% - 40px));
-  min-height: 900px;
-  margin: 20px auto;
+  width: 100%;
+  min-height: 100vh;
   display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
-  overflow: hidden;
+  grid-template-columns: 268px minmax(0, 1fr);
   background: var(--papel);
-  border: 1px solid #d8d0c1;
-  border-radius: 20px;
-  box-shadow: 0 28px 80px rgba(75, 60, 35, 0.13);
 }
 
 /* Lateral */
 
 .lateral {
-  min-height: 900px;
+  min-height: 100vh;
   padding: 34px 28px 30px;
   display: flex;
   flex-direction: column;
@@ -554,6 +549,8 @@ svg {
 
 .topo {
   height: 82px;
+  max-width: 1520px;
+  margin-inline: auto;
   padding: 0 38px;
   display: flex;
   align-items: center;
@@ -630,7 +627,10 @@ svg {
 
 /* Abertura */
 
+/* Sem moldura, mas com medida: em monitor largo a linha nao estica sem limite. */
 .pagina {
+  max-width: 1520px;
+  margin-inline: auto;
   padding: 31px 38px 28px;
 }
 
@@ -848,6 +848,14 @@ svg {
   border: 1px solid #ece2d1;
   border-radius: 16px;
   box-shadow: 0 2px 6px rgba(88, 74, 45, 0.06);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.tarefa:hover {
+  border-color: #dccfb6;
+  box-shadow: 0 5px 14px rgba(88, 74, 45, 0.1);
 }
 
 .tarefa--destaque {

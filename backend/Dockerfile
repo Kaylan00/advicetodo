@@ -22,7 +22,9 @@ CMD ["pytest"]
 
 FROM base AS prod
 
-RUN python manage.py collectstatic --noinput \
+# O chmod evita depender do bit de execucao vindo do git, que se perde em edicao no Windows.
+RUN chmod +x entrypoint.sh \
+    && python manage.py collectstatic --noinput \
     && useradd --system --create-home app \
     && chown -R app:app /app
 

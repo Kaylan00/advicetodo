@@ -217,15 +217,9 @@ svg {
 }
 
 .amostra__icone {
-  --cor: var(--azul);
-  width: 38px;
-  height: 38px;
   flex: none;
   display: grid;
   place-items: center;
-  border-radius: 50%;
-  color: var(--cor);
-  background: color-mix(in srgb, var(--cor) 16%, white);
 }
 
 .amostra__chip {
@@ -335,16 +329,6 @@ svg {
   .acesso__vitrine {
     padding: 40px 24px 24px;
   }
-}
-
-.marca__selo {
-  width: 40px;
-  height: 40px;
-  flex: none;
-  display: grid;
-  place-items: center;
-  border: 3px solid var(--azul);
-  border-radius: 50%;
 }
 
 .form {

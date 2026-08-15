@@ -50,9 +50,7 @@ export default function Sidebar({
   return (
     <aside className="lateral">
       <p className="marca">
-        <span className="marca__selo">
-          <Icon name="check" size={22} strokeWidth={2.6} />
-        </span>
+        <Icon name="concluido" size={36} weight="duotone" />
         AdviceTodo
       </p>
 

@@ -1,7 +1,7 @@
 import Icon from "./Icon";
 
 const VITRINE = [
-  { icone: "check", cor: "#12784f", rotulo: "Revisar contrato", chip: "Concluída" },
+  { icone: "concluido", cor: "#12784f", rotulo: "Revisar contrato", chip: "Concluída" },
   { icone: "maleta", cor: "#5f3fc1", rotulo: "Trabalho", chip: "Categoria" },
   { icone: "pessoas", cor: "#b8860b", rotulo: "Projeto de verão", pessoas: ["MC", "RL", "AS"] },
 ];
@@ -11,9 +11,7 @@ export default function AuthLayout({ chamada, apoio, title, subtitle, children, 
     <main className="acesso">
       <section className="acesso__vitrine">
         <p className="marca">
-          <span className="marca__selo">
-            <Icon name="check" size={22} strokeWidth={2.6} />
-          </span>
+          <Icon name="concluido" size={40} weight="duotone" />
           AdviceTodo
         </p>
 
@@ -23,8 +21,8 @@ export default function AuthLayout({ chamada, apoio, title, subtitle, children, 
         <ul className="amostra">
           {VITRINE.map((item) => (
             <li key={item.rotulo}>
-              <span className="amostra__icone" style={{ "--cor": item.cor }}>
-                <Icon name={item.icone} size={18} />
+              <span className="amostra__icone" style={{ color: item.cor }}>
+                <Icon name={item.icone} size={30} weight="duotone" />
               </span>
               {item.rotulo}
               {item.chip && (

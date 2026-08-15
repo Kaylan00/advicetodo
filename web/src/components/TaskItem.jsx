@@ -56,7 +56,7 @@ export default function TaskItem({ tarefa, onToggle, onEditar, onCompartilhar, o
         aria-label={tarefa.is_completed ? "Reabrir tarefa" : "Concluir tarefa"}
         data-testid="alternar-tarefa"
       >
-        {tarefa.is_completed && <Icon name="check" size={14} strokeWidth={2.6} />}
+        {tarefa.is_completed && <Icon name="check" size={15} weight="bold" />}
       </button>
 
       <div className="tarefa__texto">

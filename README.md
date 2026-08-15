@@ -204,6 +204,16 @@ Duas coisas mudaram no código para o mesmo artefato servir compose e nuvem:
 Segredos (chave do Django e string de conexão) ficam como secrets do próprio Container App, nunca em
 variável de ambiente exposta nem no repositório.
 
+## Créditos dos recursos visuais
+
+Nada é carregado de CDN em produção: fontes, ícones e ilustração são servidos pelo próprio
+container, então a aplicação funciona sem depender de rede externa.
+
+- Fontes **Inter**, **Nunito Sans** e **Mali**, licença SIL Open Font, embutidas em `web/public/fonts`.
+- Ícones do **[Phosphor](https://phosphoricons.com/)** (MIT), via `@phosphor-icons/react`.
+- Ilustração do **[unDraw](https://undraw.co/)** (licença livre, sem exigência de atribuição),
+  recolorida para a paleta do projeto.
+
 ## O que ficaria para uma próxima rodada
 
 - Throttling nos endpoints de login e cadastro, e blacklist de refresh token no logout.

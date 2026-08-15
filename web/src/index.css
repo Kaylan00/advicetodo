@@ -237,6 +237,21 @@ svg {
   margin-left: auto;
 }
 
+.acesso__ilustracao {
+  width: min(100%, 400px);
+  height: auto;
+  max-height: 240px;
+  margin-top: 34px;
+  object-fit: contain;
+  object-position: left bottom;
+}
+
+@media (max-height: 820px) {
+  .acesso__ilustracao {
+    display: none;
+  }
+}
+
 .acesso__painel {
   display: grid;
   place-items: center;

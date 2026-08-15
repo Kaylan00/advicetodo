@@ -43,6 +43,14 @@ export default function AuthLayout({ chamada, apoio, title, subtitle, children, 
             </li>
           ))}
         </ul>
+
+        <img
+          className="acesso__ilustracao"
+          src="/ilustracoes/tarefas.svg"
+          alt=""
+          width="420"
+          height="300"
+        />
       </section>
 
       <section className="acesso__painel">

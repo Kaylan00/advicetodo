@@ -161,13 +161,22 @@ svg {
   min-height: 100vh;
 }
 
+/* A ilustracao entra como fundo ancorado no canto: ela nunca empurra o conteudo
+   nem estoura a coluna, e a personagem aponta na direcao do formulario. */
 .acesso__vitrine {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 6px;
-  padding: 56px clamp(32px, 5vw, 76px);
-  background: var(--papel);
+  padding: clamp(36px, 5vh, 64px) clamp(32px, 5vw, 76px);
+  background:
+    url("/ilustracoes/tarefas.svg") no-repeat right clamp(16px, 4vw, 56px) bottom
+      clamp(16px, 4vh, 40px) / auto clamp(170px, 28vh, 260px),
+    var(--papel);
+}
+
+.acesso__conteudo {
+  display: flex;
+  flex-direction: column;
 }
 
 .acesso__vitrine .marca {
@@ -237,18 +246,10 @@ svg {
   margin-left: auto;
 }
 
-.acesso__ilustracao {
-  width: min(100%, 400px);
-  height: auto;
-  max-height: 240px;
-  margin-top: 34px;
-  object-fit: contain;
-  object-position: left bottom;
-}
-
-@media (max-height: 820px) {
-  .acesso__ilustracao {
-    display: none;
+/* Em tela baixa o conteudo chegaria em cima da ilustracao. */
+@media (max-height: 760px) {
+  .acesso__vitrine {
+    background-image: none;
   }
 }
 

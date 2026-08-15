@@ -18,18 +18,54 @@ CATEGORIAS = [
 ]
 
 TAREFAS = [
-    ("Revisar guias de OPME da semana", "Auditoria", Priority.HIGH, -2),
-    ("Fechar relatório de glosas", "Auditoria", Priority.HIGH, 1),
-    ("Atualizar tabela de procedimentos", "Auditoria", Priority.MEDIUM, 5),
-    ("Conferir integração com a operadora", "Operação", Priority.HIGH, 0),
-    ("Preparar rotina de importação", "Operação", Priority.MEDIUM, 3),
-    ("Revisar alertas de monitoramento", "Operação", Priority.LOW, 8),
-    ("Documentar fluxo de autorização", "Operação", Priority.MEDIUM, 12),
-    ("Agendar consulta", "Pessoal", Priority.LOW, 20),
-    ("Renovar plano odontológico", "Pessoal", Priority.LOW, None),
-    ("Estudar Django REST Framework", "Pessoal", Priority.MEDIUM, None),
-    ("Organizar backlog do time", None, Priority.MEDIUM, 2),
-    ("Responder e-mails pendentes", None, Priority.LOW, None),
+    (
+        "Revisar guias de OPME da semana",
+        "Conferir os pareceres pendentes",
+        "Auditoria",
+        Priority.HIGH,
+        -2,
+    ),
+    ("Fechar relatório de glosas", "Consolidar os números do mês", "Auditoria", Priority.HIGH, 1),
+    (
+        "Atualizar tabela de procedimentos",
+        "Aplicar a nova versão do rol",
+        "Auditoria",
+        Priority.MEDIUM,
+        5,
+    ),
+    (
+        "Conferir integração com a operadora",
+        "Validar o retorno das guias",
+        "Operação",
+        Priority.HIGH,
+        0,
+    ),
+    ("Preparar rotina de importação", "Mapear o layout do arquivo", "Operação", Priority.MEDIUM, 3),
+    (
+        "Revisar alertas de monitoramento",
+        "Ajustar os limites de disparo",
+        "Operação",
+        Priority.LOW,
+        8,
+    ),
+    (
+        "Documentar fluxo de autorização",
+        "Desenhar o passo a passo no wiki",
+        "Operação",
+        Priority.MEDIUM,
+        12,
+    ),
+    ("Agendar consulta", "Levar os exames anteriores", "Pessoal", Priority.LOW, 20),
+    ("Renovar plano odontológico", "Comparar as duas propostas", "Pessoal", Priority.LOW, None),
+    (
+        "Estudar Django REST Framework",
+        "Terminar o capítulo de permissões",
+        "Pessoal",
+        Priority.MEDIUM,
+        None,
+    ),
+    ("Organizar backlog do time", "Repriorizar antes da próxima sprint", None, Priority.MEDIUM, 2),
+    ("Responder e-mails pendentes", "Caixa de entrada da semana", None, Priority.LOW, None),
 ]
 
 
@@ -47,11 +83,12 @@ class Command(BaseCommand):
 
         hoje = timezone.localdate()
         criadas = []
-        for titulo, categoria, prioridade, dias in TAREFAS:
+        for titulo, descricao, categoria, prioridade, dias in TAREFAS:
             tarefa, _ = Task.objects.get_or_create(
                 owner=ana,
                 title=titulo,
                 defaults={
+                    "description": descricao,
                     "category": categorias.get(categoria),
                     "priority": prioridade,
                     "due_date": None if dias is None else hoje + timedelta(days=dias),
@@ -65,6 +102,7 @@ class Command(BaseCommand):
             owner=ana,
             title="Comprar passagens",
             defaults={
+                "description": "Viagem para o evento em São Paulo",
                 "category": categorias["Pessoal"],
                 "priority": Priority.HIGH,
                 "due_date": sete_de_setembro,

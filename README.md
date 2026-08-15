@@ -213,6 +213,8 @@ container, então a aplicação funciona sem depender de rede externa.
 - Ícones do **[Phosphor](https://phosphoricons.com/)** (MIT), via `@phosphor-icons/react`.
 - Ilustração do **[unDraw](https://undraw.co/)** (licença livre, sem exigência de atribuição),
   recolorida para a paleta do projeto.
+- Foto de fundo da tela de acesso do **[Unsplash](https://unsplash.com/)** (uso livre, sem
+  exigência de atribuição), desfocada por uma camada de vidro fosco para não competir com o texto.
 
 ## O que ficaria para uma próxima rodada
 
